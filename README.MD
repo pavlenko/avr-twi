@@ -4,6 +4,21 @@ This library allows to connect between devices via I2C bus, all communications i
 
 ## Usage
 
+Configuration
+
+```cpp
+// Set custom Rx/Tx buffer size
+#define TWI_BUFFER_LENGTH 32
+
+// If you want to disable master module add next definition
+// This excludes code from compilation and decrease firmware size
+#define TWI_ENABLE_MASTER 0
+
+// If you want to disable slave module add next definition
+// This excludes code from compilation and decrease firmware size
+#define TWI_ENABLE_SLAVE 0
+```
+
 Master example
 
 ```cpp

@@ -67,6 +67,30 @@ void TWIClass::setFrequency(uint32_t frequency) {
     TWBR = (uint8_t) (((F_CPU / frequency) - 16) / 2);
 }
 
+uint8_t TWIClass::readU08() {
+    uint8_t result;
+    this->read(&result);
+    return result;
+}
+
+uint16_t TWIClass::readU16() {
+    uint16_t result;
+    this->read(&result);
+    return result;
+}
+
+uint32_t TWIClass::readU32() {
+    uint32_t result;
+    this->read(&result);
+    return result;
+}
+
+float TWIClass::readFL() {
+    float result;
+    this->read(&result);
+    return result;
+}
+
 void TWIClass::read(uint8_t *value) {
     this->read(value, 1);
 }
@@ -91,6 +115,22 @@ void TWIClass::read(uint8_t *data, uint8_t length) {
             error = TWI_ERROR_READ;
         }
     }
+}
+
+void TWIClass::writeU08(uint8_t value) {
+    this->write(&value);
+}
+
+void TWIClass::writeU16(uint16_t value) {
+    this->write(&value);
+}
+
+void TWIClass::writeU32(uint32_t value) {
+    this->write(&value);
+}
+
+void TWIClass::writeFL(float value) {
+    this->write(&value);
 }
 
 void TWIClass::write(uint8_t *value) {

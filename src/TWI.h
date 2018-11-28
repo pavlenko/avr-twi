@@ -80,6 +80,26 @@ public:
     void setFrequency(uint32_t frequency);
 
     /**
+     * @return
+     */
+    uint8_t readU08();
+
+    /**
+     * @return
+     */
+    uint16_t readU16();
+
+    /**
+     * @return
+     */
+    uint32_t readU32();
+
+    /**
+     * @return
+     */
+    float readFL();
+
+    /**
      * Read value from TX buffer to pointer
      *
      * @param value
@@ -114,6 +134,26 @@ public:
      * @param length
      */
     void read(uint8_t *data, uint8_t length);
+
+    /**
+     * @param value
+     */
+    void writeU08(uint8_t value);
+
+    /**
+     * @param value
+     */
+    void writeU16(uint16_t value);
+
+    /**
+     * @param value
+     */
+    void writeU32(uint32_t value);
+
+    /**
+     * @param value
+     */
+    void writeFL(float value);
 
     /**
      * Write value to TX buffer

@@ -32,17 +32,11 @@ void onTransmit() {
 
 void onReceive() {
     // Do something with received data as example set new app state
-    uint8_t value1;
-    TWI.read(&value1);// Read byte from RX buffer
 
-    uint16_t value2;
-    TWI.read(&value2);// Read word from RX buffer
-
-    uint32_t value3;
-    TWI.read(&value3);// Read dword from RX buffer
-
-    float value4;
-    TWI.read(&value4);// Read float from RX buffer
+    uint8_t value1  = TWI.readU08();// Read byte from RX buffer
+    uint16_t value2 = TWI.readU16();// Read word from RX buffer
+    uint32_t value3 = TWI.readU32();// Read dword from RX buffer
+    float value4    = TWI.readFL();// Read float from RX buffer
 
     uint8_t values[4];
     TWI.read(values, 4);// Read 4 bytes array from RX buffer
@@ -62,17 +56,10 @@ int main() {
     // Configure transmission target
     TWI.start();
 
-    uint8_t value1 = 0;
-    TWI.write(value1);// Write byte to TX buffer
-
-    uint16_t value2 = 0;
-    TWI.write(value2);// Write word to TX buffer
-
-    uint32_t value3 = 0;
-    TWI.write(value3);// Write dword to TX buffer
-
-    float value4 = 0;
-    TWI.write(value4);// Write float to TX buffer
+    TWI.writeU08(1);// Write byte to TX buffer
+    TWI.writeU16(1);// Write word to TX buffer
+    TWI.writeU32(1);// Write dword to TX buffer
+    TWI.writeFL(1.0);// Write float to TX buffer
 
     uint8_t values[4];
     TWI.write(values, 4);// Write 4 bytes array to TX buffer
@@ -90,17 +77,11 @@ Slave example
 
 void onReceive() {
     // Do something with received data as example set new app state
-    uint8_t value1;
-    TWI.read(&value1);// Read byte from RX buffer
 
-    uint16_t value2;
-    TWI.read(&value2);// Read word from RX buffer
-
-    uint32_t value3;
-    TWI.read(&value3);// Read dword from RX buffer
-
-    float value4;
-    TWI.read(&value4);// Read float from RX buffer
+    uint8_t value1  = TWI.readU08();// Read byte from RX buffer
+    uint16_t value2 = TWI.readU16();// Read word from RX buffer
+    uint32_t value3 = TWI.readU32();// Read dword from RX buffer
+    float value4    = TWI.readFL();// Read float from RX buffer
 
     uint8_t values[4];
     TWI.read(values, 4);// Read 4 bytes array from RX buffer
@@ -109,17 +90,11 @@ void onReceive() {
 void onRequest() {
     // Send something to master, may depends on rx data
     // There are only need to fill buffer data
-    uint8_t value1 = 0;
-    TWI.write(value1);// Write byte to TX buffer
 
-    uint16_t value2 = 0;
-    TWI.write(value2);// Write word to TX buffer
-
-    uint32_t value3 = 0;
-    TWI.write(value3);// Write dword to TX buffer
-
-    float value4 = 0;
-    TWI.write(value4);// Write float to TX buffer
+    TWI.writeU08(1);// Write byte to TX buffer
+    TWI.writeU16(1);// Write word to TX buffer
+    TWI.writeU32(1);// Write dword to TX buffer
+    TWI.writeFL(1.0);// Write float to TX buffer
 
     uint8_t values[4];
     TWI.write(values, 4);// Write 4 bytes array to TX buffer

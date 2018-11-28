@@ -100,34 +100,6 @@ public:
     float readFL();
 
     /**
-     * Read value from TX buffer to pointer
-     *
-     * @param value
-     */
-    void read(uint8_t *value);
-
-    /**
-     * Read value from TX buffer to pointer
-     *
-     * @param value
-     */
-    void read(uint16_t *value);
-
-    /**
-     * Read value from TX buffer to pointer
-     *
-     * @param value
-     */
-    void read(uint32_t *value);
-
-    /**
-     * Read value from TX buffer to pointer
-     *
-     * @param value
-     */
-    void read(float *value);
-
-    /**
      * Read array from TX buffer to pointer
      *
      * @param value
@@ -154,34 +126,6 @@ public:
      * @param value
      */
     void writeFL(float value);
-
-    /**
-     * Write value to TX buffer
-     *
-     * @param value
-     */
-    void write(uint8_t *value);
-
-    /**
-     * Write value to TX buffer
-     *
-     * @param value
-     */
-    void write(uint16_t *value);
-
-    /**
-     * Write value to TX buffer
-     *
-     * @param value
-     */
-    void write(uint32_t *value);
-
-    /**
-     * Write value to TX buffer
-     *
-     * @param value
-     */
-    void write(float *value);
 
     /**
      * Write values array to TX buffer

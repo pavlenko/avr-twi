@@ -27,6 +27,26 @@ static uint8_t rxBufferData[TWI_BUFFER_LENGTH];
 static volatile uint8_t rxBufferIndex;
 static volatile uint8_t rxBufferLength;
 
+static inline void _read(uint8_t *data, uint8_t length) {
+    for (uint8_t i = 0; i < length; i++) {
+        if (rxBufferIndex < rxBufferLength) {
+            *(data + i) = rxBufferData[rxBufferIndex++];
+        } else {
+            error = TWI_ERROR_READ;
+        }
+    }
+}
+
+static inline void _write(uint8_t *data, uint8_t length) {
+    for (uint8_t i = 0; i < length; i++) {
+        if (txBufferLength < TWI_BUFFER_LENGTH) {
+            txBufferData[txBufferLength++] = *(data + i);
+        } else {
+            error = TWI_ERROR_WRITE;
+        }
+    }
+}
+
 void TWIClass::enable() {
     state           = TWI_STATE_READY;
     sendStop        = true;
@@ -69,95 +89,52 @@ void TWIClass::setFrequency(uint32_t frequency) {
 
 uint8_t TWIClass::readU08() {
     uint8_t result;
-    this->read(&result);
+    _read(&result, 1);
     return result;
 }
 
 uint16_t TWIClass::readU16() {
     uint16_t result;
-    this->read(&result);
+    _read((uint8_t *) &result, 2);
     return result;
 }
 
 uint32_t TWIClass::readU32() {
     uint32_t result;
-    this->read(&result);
+    _read((uint8_t *) &result, 4);
     return result;
 }
 
 float TWIClass::readFL() {
     float result;
-    this->read(&result);
+    _read((uint8_t *) &result, 4);
     return result;
 }
 
-void TWIClass::read(uint8_t *value) {
-    this->read(value, 1);
-}
-
-void TWIClass::read(uint16_t *value) {
-    this->read((uint8_t *) value, 2);
-}
-
-void TWIClass::read(uint32_t *value) {
-    this->read((uint8_t *) value, 4);
-}
-
-void TWIClass::read(float *value) {
-    this->read((uint8_t *) value, 4);
-}
-
 void TWIClass::read(uint8_t *data, uint8_t length) {
-    for (uint8_t i = 0; i < length; i++) {
-        if (rxBufferIndex < rxBufferLength) {
-            *(data + i) = rxBufferData[rxBufferIndex++];
-        } else {
-            error = TWI_ERROR_READ;
-        }
-    }
+    _read(data, length);
 }
 
 void TWIClass::writeU08(uint8_t value) {
-    this->write(&value);
+    _write(&value, 1);
 }
 
 void TWIClass::writeU16(uint16_t value) {
-    this->write(&value);
+    _write((uint8_t *) &value, 2);
 }
 
 void TWIClass::writeU32(uint32_t value) {
-    this->write(&value);
+    _write((uint8_t *) &value, 4);
 }
 
 void TWIClass::writeFL(float value) {
-    this->write(&value);
-}
-
-void TWIClass::write(uint8_t *value) {
-    this->write(value, 1);
-}
-
-void TWIClass::write(uint16_t *value) {
-    this->write((uint8_t *) value, 2);
-}
-
-void TWIClass::write(uint32_t *value) {
-    this->write((uint8_t *) value, 4);
-}
-
-void TWIClass::write(float *value) {
-    this->write((uint8_t *) value, 4);
+    _write((uint8_t *) &value, 4);
 }
 
 void TWIClass::write(uint8_t *data, uint8_t length) {
-    for (uint8_t i = 0; i < length; i++) {
-        if (txBufferLength < TWI_BUFFER_LENGTH) {
-            txBufferData[txBufferLength++] = *(data + i);
-        } else {
-            error = TWI_ERROR_WRITE;
-        }
-    }
+    _write(data, length);
 }
+
 void TWIClass::receive(uint8_t address, uint8_t length) {
     this->receive(address, length, true);
 }

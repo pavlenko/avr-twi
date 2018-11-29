@@ -136,6 +136,11 @@ public:
     void write(uint8_t *data, uint8_t length);
 
     /**
+     * Blocking wait for TWI module become ready
+     */
+    void wait();
+
+    /**
      * Receive data from slave
      *
      * @param address

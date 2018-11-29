@@ -9,7 +9,7 @@
 #define TWI_SEND_ACK()   (TWCR = _BV(TWINT) | _BV(TWEN) | _BV(TWIE) | _BV(TWEA))
 #define TWI_SEND_NACK()  (TWCR = _BV(TWINT) | _BV(TWEN) | _BV(TWIE))
 
-static volatile uint8_t state;
+static volatile uint8_t state = TWI_STATE_READY;
 static volatile uint8_t error;
 static volatile uint8_t addressAndRW;
 static volatile bool    isRepeatedStart;
@@ -135,6 +135,10 @@ void TWIClass::write(uint8_t *data, uint8_t length) {
     _write(data, length);
 }
 
+void TWIClass::wait() {
+    while (TWI_STATE_READY != state);
+}
+
 void TWIClass::receive(uint8_t address, uint8_t length) {
     this->receive(address, length, true);
 }
@@ -146,7 +150,7 @@ void TWIClass::receive(uint8_t address, uint8_t length, bool stop) {
     }
 
     // Blocking wait TWI module become ready
-    while (TWI_STATE_READY != state);
+    this->wait();
 
     state = TWI_STATE_MASTER_RX;
 
@@ -213,7 +217,7 @@ void TWIClass::transmit(uint8_t address, bool stop) {
     }
 
     // Blocking wait TWI module become ready
-    while (TWI_STATE_READY != state);
+    this->wait();
 
     state = TWI_STATE_MASTER_TX;
     error = TWI_ERROR_NONE;
